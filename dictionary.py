@@ -7,17 +7,25 @@ def translate(w):
     w = w.lower()
     if w in data:
         return data[w]
+    elif w.title() in data:
+        return data[w.title()]
+    elif w.upper() in data:
+        return data[w.upper()]
     elif len(get_close_matches(w, data.keys())) > 0:
-        print( "Did you mean %s instead." % get_close_matches(w, data.keys())[0])
-        a= input( "Please Enter 'Y' or 'N'.: ")
-        if a == 'Y':
-            return word
+        yn = input(( "Did you mean %s instead? Please Enter 'Y' or 'N'.:" % get_close_matches(w, data.keys())[0]))
+        if yn == 'Y':
+            return data[get_close_matches(w, data.keys())[0]]
         else:
-            pass
+            return "Please Double check your query."    
     else:
-        print("Word entered by You is wrong. Please re-check it.")
+       return "Word entered by You is wrong. Please re-check it."
 
 word = input("Enter word: ")
 
-print(translate(word))
+output= (translate(word))
 
+if type(output) == list:
+    for item in output:
+        print(output)
+else:
+    print(output)
